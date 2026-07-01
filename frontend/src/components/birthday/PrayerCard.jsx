@@ -29,6 +29,6 @@ const [wish,setWish]=useState("");
 
 const saveWish=()=>{
 
-localStorage.setItem("icaWish",wish);
+localStorage.setItem("icaaWish",wish);
 
 }

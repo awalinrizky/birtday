@@ -39,21 +39,21 @@ image:photo4
 {
 id:5,
 title:"Sweet Moment",
-date:"TODO: ganti tanggal",
+date:"25 May 2025",
 image:photo5
 },
 
 {
 id:6,
 title:"Together",
-date:"TODO: ganti tanggal",
+date:"30 Jun 2025",
 image:photo6
 },
 
 {
 id:7,
 title:"Special Day",
-date:"TODO: ganti tanggal",
+date:"15 Jul 2025",
 image:photo8
 }
 

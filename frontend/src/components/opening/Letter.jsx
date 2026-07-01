@@ -35,7 +35,7 @@ export default function Letter() {
         <TypeAnimation
 
           sequence={[
-            `Dear Ica,
+            `Dear Icaa,
 
 Today is your special day.
 

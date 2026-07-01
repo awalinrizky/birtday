@@ -1,16 +1,198 @@
+// import { useState, useEffect } from 'react';
+// import { motion, AnimatePresence } from 'framer-motion';
+// import axios from 'axios';
+// import toast from 'react-hot-toast';
+
+// // Panggil API yang UDAH PASTI JALAN
+// const axiosInstance = axios.create({
+//   baseURL: 'http://localhost:5000/api',
+//   headers: { 'Content-Type': 'application/json' },
+// });
+
+// export default function BirthdayWish({ finished }) {
+//   if (!finished) return null;
+
+//   const [wishes, setWishes] = useState([]);
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [myWish, setMyWish] = useState('');
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+
+//   // Trik: Ambil dari timeline, tapi cuma tampilin yang isinya Wish Ica
+//   const fetchWishes = async () => {
+//     try {
+//       const response = await axiosInstance.get('/timelines');
+//       const allData = response.data.data || [];
+//       const onlyWishes = allData.filter(item => item.title === "Wish dari Ica 🤍");
+//       setWishes(onlyWishes);
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchWishes();
+//   }, []);
+
+//   const handleSaveWish = async (e) => {
+//     e.preventDefault();
+//     if (!myWish.trim()) return;
+
+//     setIsSubmitting(true);
+//     try {
+//       // Trik: Simpan wish sebagai timeline event biar gak perlu bikin tabel baru di jam 1 pagi!
+//       await axiosInstance.post('/timelines', {
+//         title: "Wish dari Ica 🤍",
+//         description: myWish,
+//         event_date: new Date().toISOString(),
+//         image_url: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80" // Gambar estetis otomatis
+//       });
+//       toast.success('Harapan kamu berhasil disimpan semesta! ✨');
+//       setMyWish('');
+//       setIsOpen(false);
+//       fetchWishes(); 
+//     } catch (error) {
+//       toast.error('Gagal menyimpan, coba lagi sayang');
+//     } finally {
+//       setIsSubmitting(false);
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-pink-50 flex flex-col items-center justify-center px-4 py-20 relative overflow-hidden">
+      
+//       {/* Background Decor */}
+//       <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none opacity-40">
+//         <div className="absolute -top-24 -right-24 w-96 h-96 bg-pink-200 rounded-full blur-[100px]"></div>
+//         <div className="absolute bottom-10 -left-20 w-80 h-80 bg-rose-200 rounded-full blur-[100px]"></div>
+//       </div>
+
+//       <motion.div 
+//         initial={{ opacity: 0, y: 30 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ duration: 0.8 }}
+//         className="z-10 max-w-3xl w-full text-center space-y-10"
+//       >
+//         {/* Header */}
+//         <div className="space-y-4">
+//           <h1 className="text-5xl md:text-6xl font-serif text-slate-800 tracking-wide drop-shadow-sm">
+//             Happy 23rd Birthday, <br/> Sayang! 🤍
+//           </h1>
+//         </div>
+
+//         {/* Surat dari Lo (UI Premium) */}
+//         <motion.div 
+//           whileHover={{ y: -5 }}
+//           className="bg-white/80 backdrop-blur-xl p-8 md:p-12 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-white relative text-left"
+//         >
+//           <div className="absolute -top-4 left-8 bg-gradient-to-r from-rose-400 to-pink-500 text-white text-xs uppercase tracking-widest px-6 py-2 rounded-full font-bold shadow-lg shadow-rose-200">
+//             From Your Man
+//           </div>
+//           <h3 className="font-serif text-2xl text-slate-800 mt-4 mb-4">Semoga di Tahun Ini...</h3>
+//           <p className="font-sans text-slate-600 leading-relaxed text-base md:text-lg italic">
+//             Selamat ulang tahun yang ke-23, cantikk. Di umur yang baru ini, doa terbaik aku selalu menyertai kamu. 
+//             Semoga sayang bisa jadi pribadi yang lebih baik lagi, selalu dilimpahkan kebahagiaan, disehatkan fisiknya, 
+//             dan didekatkan sama semua impian yang pengen kamu kejar. Aku bakal selalu ada di sini, di setiap langkah 
+//             dan tahun-tahun kamu berikutnya. I love you so much Icaa💖
+//           </p>
+//         </motion.div>
+
+//         {/* Tombol Buat Nulis Wish */}
+//         <div className="pt-4">
+//           {!isOpen && (
+//             <motion.button
+//               whileHover={{ scale: 1.05 }}
+//               whileTap={{ scale: 0.95 }}
+//               onClick={() => setIsOpen(true)}
+//               className="bg-slate-800 text-white px-10 py-4 rounded-full font-sans tracking-[0.15em] text-sm uppercase shadow-2xl hover:bg-slate-700 transition duration-300"
+//             >
+//               Make Your 23rd Wish ✨
+//             </motion.button>
+//           )}
+
+//           {/* Form Input Mewah */}
+//           <AnimatePresence>
+//             {isOpen && (
+//               <motion.form 
+//                 initial={{ opacity: 0, height: 0, scale: 0.9 }}
+//                 animate={{ opacity: 1, height: 'auto', scale: 1 }}
+//                 exit={{ opacity: 0, height: 0, scale: 0.9 }}
+//                 onSubmit={handleSaveWish}
+//                 className="bg-white p-8 rounded-[2rem] shadow-2xl border border-rose-50 max-w-xl mx-auto text-left"
+//               >
+//                 <label className="block text-xs uppercase tracking-widest text-rose-400 font-bold mb-3">
+//                   Tulis Harapan Kamu Di Sini
+//                 </label>
+//                 <textarea
+//                   value={myWish}
+//                   onChange={(e) => setMyWish(e.target.value)}
+//                   rows="5"
+//                   placeholder="Di umur 23 ini, aku berharap..."
+//                   className="w-full border-2 border-rose-100 p-4 text-base rounded-2xl focus:outline-none focus:border-rose-400 bg-rose-50/30 resize-none text-slate-700 transition"
+//                   required
+//                 />
+//                 <div className="flex gap-4 justify-end mt-6">
+//                   <button 
+//                     type="button" 
+//                     onClick={() => setIsOpen(false)} 
+//                     className="px-6 py-3 text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-slate-700 transition"
+//                   >
+//                     Cancel
+//                   </button>
+//                   <button 
+//                     type="submit" 
+//                     disabled={isSubmitting}
+//                     className="bg-gradient-to-r from-rose-400 to-pink-500 text-white px-8 py-3 text-xs rounded-full font-bold uppercase tracking-widest shadow-lg shadow-rose-200 hover:shadow-rose-300 transition disabled:opacity-50"
+//                   >
+//                     {isSubmitting ? 'Menyimpan...' : 'Kirim Harapan'}
+//                   </button>
+//                 </div>
+//               </motion.form>
+//             )}
+//           </AnimatePresence>
+//         </div>
+
+//         {/* LIST PERMOHONAN CEWEK LO */}
+//         {wishes.length > 0 && (
+//           <div className="space-y-6 pt-10 text-left max-w-2xl mx-auto">
+//             <h4 className="text-center text-sm uppercase tracking-[0.2em] text-rose-400 font-bold">
+//               Harapan Kamu Yang Tersimpan 🤍
+//             </h4>
+//             <div className="space-y-6">
+//               {wishes.map((wish) => (
+//                 <motion.div
+//                   key={wish.id}
+//                   initial={{ opacity: 0, y: 20 }}
+//                   animate={{ opacity: 1, y: 0 }}
+//                   className="bg-white/60 border border-white p-6 md:p-8 rounded-[2rem] shadow-xl backdrop-blur-md relative"
+//                 >
+//                   <div className="absolute top-0 left-8 -translate-y-1/2 bg-white px-4 py-1 rounded-full border border-rose-100 shadow-sm">
+//                     <span className="text-[10px] text-slate-400 font-mono font-bold tracking-wider">
+//                       {new Date(wish.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+//                     </span>
+//                   </div>
+//                   <p className="font-sans text-slate-700 text-base md:text-lg leading-relaxed whitespace-pre-wrap mt-2">
+//                     {wish.description}
+//                   </p>
+//                 </motion.div>
+//               ))}
+//             </div>
+//           </div>
+//         )}
+//       </motion.div>
+//     </div>
+//   );
+// }
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-// Inisialisasi API Guerilla kita
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:5000/api',
   headers: { 'Content-Type': 'application/json' },
 });
 
 export default function BirthdayWish({ finished }) {
-  // Kalau countdown belum habis, sembunyikan section ini
   if (!finished) return null;
 
   const [wishes, setWishes] = useState([]);
@@ -18,12 +200,12 @@ export default function BirthdayWish({ finished }) {
   const [myWish, setMyWish] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Ambil permohonan yang udah di-save cewek lo dari database
   const fetchWishes = async () => {
     try {
-      // Kita numpang pake endpoint letters yang udah beres tadi biar cepet
-      const response = await axiosInstance.get('/letters');
-      setWishes(response.data.data || []);
+      const response = await axiosInstance.get('/timelines');
+      const allData = response.data.data || [];
+      const onlyWishes = allData.filter(item => item.title === "Wish dari Ica 🤍");
+      setWishes(onlyWishes);
     } catch (error) {
       console.error(error);
     }
@@ -39,107 +221,120 @@ export default function BirthdayWish({ finished }) {
 
     setIsSubmitting(true);
     try {
-      await axiosInstance.post('/letters', {
-        title: "Ica's Wish 🎂",
-        content: myWish
+      await axiosInstance.post('/timelines', {
+        title: "Wish dari Ica 🤍",
+        description: myWish,
+        event_date: new Date().toISOString(),
+        image_url: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
       });
-      toast.success('Permohonan kamu sudah disimpan semesta, Sayang! ✨');
+      toast.success('Harapan kamu berhasil disimpan semesta! ✨');
       setMyWish('');
       setIsOpen(false);
-      fetchWishes(); // Refresh list bawah
+      fetchWishes(); 
     } catch (error) {
-      toast.error('Gagal menyimpan permohonan');
+      toast.error('Gagal menyimpan, coba lagi sayang');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-warmWhite px-4 py-20 relative overflow-hidden">
-      {/* Efek Latar Belakang Romantis */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-roseGold/10 rounded-full blur-[120px]" />
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-pink-50 flex flex-col items-center justify-center px-4 py-20 relative overflow-hidden">
+      
+      {/* Background Decor */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none opacity-40">
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-pink-200 rounded-full blur-[100px]"></div>
+        <div className="absolute bottom-10 -left-20 w-80 h-80 bg-rose-200 rounded-full blur-[100px]"></div>
+      </div>
 
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1 }}
-        className="z-10 max-w-2xl w-full text-center space-y-12"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        // FIX: Pakai flex dan gap-12 biar jarak antar elemen lega dan gak numpuk
+        className="z-10 max-w-3xl w-full text-center flex flex-col gap-12"
       >
-        {/* Header Besar */}
-        <div className="space-y-2">
-          <h1 className="text-4xl md:text-5xl font-serif text-darkText tracking-wide">
-            Happy 23rd Birthday, Sayang! 🤍
+        {/* Header */}
+        <div className="flex flex-col gap-4 mt-8">
+          <h1 className="text-5xl md:text-6xl font-serif text-slate-800 tracking-wide drop-shadow-sm">
+            Happy 23rd Birthday, <br/> Sayang! 🤍
           </h1>
-          <div className="w-24 h-px bg-roseGold mx-auto mt-4" />
+          <p className="text-rose-400 tracking-[0.2em] text-sm font-medium uppercase">
+            Welcome to your special chapter
+          </p>
         </div>
 
-        {/* PERMOHONAN PERTAMA: Dari Lo (Hardcoded Manis) */}
+        {/* Surat dari Lo */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="bg-white/60 backdrop-blur-md p-8 rounded-2xl border border-beige/50 shadow-sm text-left relative"
+          whileHover={{ y: -5 }}
+          // FIX: Tambahin pt-12 (padding-top) biar tulisan di dalem kotak gak nabrak label
+          className="bg-white/80 backdrop-blur-xl p-8 pt-12 md:p-12 md:pt-14 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-white relative text-left mt-4"
         >
-          <div className="absolute -top-3 left-6 bg-roseGold text-white text-xs uppercase tracking-widest px-3 py-1 rounded-full font-medium">
+          {/* FIX: Posisi label -top-5 biar lebih naik dan gak nyenggol teks */}
+          <div className="absolute -top-5 left-8 bg-gradient-to-r from-rose-400 to-pink-500 text-white text-xs uppercase tracking-widest px-6 py-2 rounded-full font-bold shadow-lg shadow-rose-200">
             From Your Man
           </div>
-          <h3 className="font-serif text-xl text-darkText mt-2 mb-3">Semoga di Tahun Ini...</h3>
-          <p className="font-sans text-mutedText leading-relaxed text-sm md:text-base">
+          <h3 className="font-serif text-2xl text-slate-800 mb-4">Semoga di Tahun Ini...</h3>
+          <p className="font-sans text-slate-600 leading-relaxed text-base md:text-lg italic">
             "Selamat ulang tahun yang ke-23, cantik. Di umur yang baru ini, doa terbaik aku selalu menyertai kamu. 
             Semoga sayang bisa jadi pribadi yang lebih baik lagi, selalu dilimpahkan kebahagiaan, disehatkan fisiknya, 
             dan didekatkan sama semua impian yang pengen kamu kejar. Aku bakal selalu ada di sini, di setiap langkah 
-            dan tahun-tahun kamu berikutnya. I love you so much."
+            dan tahun-tahun kamu berikutnya. I love you so much. 🌹"
           </p>
         </motion.div>
 
-        {/* TOMBOL UNTUK CEWEK LO NGETIK PERMOHONAN */}
+        {/* Tombol Buat Nulis Wish */}
         <div>
-          {!isOpen && (
+          {wishes.length === 0 && !isOpen && (
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsOpen(true)}
-              className="bg-roseGold text-white px-8 py-3 rounded-full font-sans tracking-widest text-sm uppercase shadow-md hover:bg-dustyPink transition"
+              className="bg-slate-800 text-white px-10 py-4 rounded-full font-sans tracking-[0.15em] text-sm uppercase shadow-2xl hover:bg-slate-700 transition duration-300"
             >
               Make Your 23rd Wish ✨
             </motion.button>
           )}
 
-          {/* Form Input yang Muncul Pop-up Anggun */}
+          {/* Form Input Mewah */}
           <AnimatePresence>
             {isOpen && (
               <motion.form 
-                initial={{ opacity: 0, h: 0 }}
-                animate={{ opacity: 1, h: 'auto' }}
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0, height: 0, scale: 0.9 }}
+                animate={{ opacity: 1, height: 'auto', scale: 1 }}
+                exit={{ opacity: 0, height: 0, scale: 0.9 }}
                 onSubmit={handleSaveWish}
-                className="mt-6 space-y-4 bg-white p-6 rounded-2xl border border-beige shadow-lg max-w-md mx-auto text-left"
+                className="bg-white p-8 rounded-[2rem] shadow-2xl border border-rose-50 max-w-xl mx-auto text-left"
               >
-                <label className="block text-xs uppercase tracking-widest text-mutedText font-medium">
-                  Tulis harapan kamu di umur ke-23 di sini...
+                <label className="block text-sm uppercase tracking-widest text-rose-400 font-bold mb-1">
+                  Tulis Harapan Kamu Di Sini
                 </label>
+                <p className="text-xs text-rose-500 italic mb-4 font-medium">
+                  *Tiati cantik, harapan ini cuma bisa dikirim sekali aja lho! 🤫
+                </p>
+                
                 <textarea
                   value={myWish}
                   onChange={(e) => setMyWish(e.target.value)}
-                  rows="4"
-                  placeholder="Aku berharap di umur 23 ini..."
-                  className="w-full border border-beige p-3 text-sm rounded-xl focus:outline-none focus:border-roseGold bg-warmWhite/20 resize-none text-darkText"
+                  rows="5"
+                  placeholder="Di umur 23 ini, aku berharap..."
+                  className="w-full border-2 border-rose-100 p-4 text-base rounded-2xl focus:outline-none focus:border-rose-400 bg-rose-50/30 resize-none text-slate-700 transition"
                   required
                 />
-                <div className="flex gap-2 justify-end">
+                <div className="flex gap-4 justify-end mt-6">
                   <button 
                     type="button" 
                     onClick={() => setIsOpen(false)} 
-                    className="px-4 py-2 text-xs text-mutedText uppercase tracking-wider hover:text-darkText"
+                    className="px-6 py-3 text-xs font-bold text-slate-400 uppercase tracking-widest hover:text-slate-700 transition"
                   >
                     Cancel
                   </button>
                   <button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="bg-roseGold text-white px-4 py-2 text-xs rounded-lg uppercase tracking-wider hover:bg-dustyPink transition disabled:opacity-50"
+                    className="bg-gradient-to-r from-rose-400 to-pink-500 text-white px-8 py-3 text-xs rounded-full font-bold uppercase tracking-widest shadow-lg shadow-rose-200 hover:shadow-rose-300 transition disabled:opacity-50"
                   >
-                    {isSubmitting ? 'Saving...' : 'Save Wish'}
+                    {isSubmitting ? 'Menyimpan...' : 'Kirim Harapan'}
                   </button>
                 </div>
               </motion.form>
@@ -147,26 +342,28 @@ export default function BirthdayWish({ finished }) {
           </AnimatePresence>
         </div>
 
-        {/* LIST PERMOHONAN CEWEK LO YANG SUDAH DI-SAVE */}
+        {/* LIST PERMOHONAN CEWEK LO */}
         {wishes.length > 0 && (
-          <div className="space-y-4 pt-6 text-left">
-            <h4 className="text-xs uppercase tracking-widest text-mutedText font-semibold px-2">
-              Your Saved Wishes 🎂
+          <div className="space-y-6 pt-2 text-left max-w-2xl mx-auto w-full">
+            <h4 className="text-center text-sm uppercase tracking-[0.2em] text-rose-400 font-bold">
+              Harapan Kamu Yang Tersimpan 🤍
             </h4>
-            <div className="space-y-4">
+            <div className="space-y-6">
               {wishes.map((wish) => (
                 <motion.div
                   key={wish.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="bg-white/40 border border-beige/40 p-5 rounded-xl backdrop-blur-sm"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-white/60 border border-white p-6 md:p-8 rounded-[2rem] shadow-xl backdrop-blur-md relative mt-4"
                 >
-                  <p className="font-sans text-darkText text-sm leading-relaxed whitespace-pre-wrap">
-                    {wish.content}
+                  <div className="absolute -top-4 left-8 bg-white px-4 py-1 rounded-full border border-rose-100 shadow-sm">
+                    <span className="text-[10px] text-slate-400 font-mono font-bold tracking-wider">
+                      {new Date(wish.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                    </span>
+                  </div>
+                  <p className="font-sans text-slate-700 text-base md:text-lg leading-relaxed whitespace-pre-wrap mt-2">
+                    {wish.description}
                   </p>
-                  <span className="block text-[10px] text-mutedText/70 mt-2 font-mono">
-                    Locked at {new Date(wish.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                  </span>
                 </motion.div>
               ))}
             </div>

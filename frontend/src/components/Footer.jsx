@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer className="bg-wine-deep text-paper py-20">
       <div className="max-w-6xl mx-auto text-center px-6">
-        <div className="monogram-seal w-14 h-14 text-xl mx-auto">R&I</div>
+        <div className="monogram-seal w-14 h-14 text-xl mx-auto">CAA</div>
 
         <h2
           className="text-3xl md:text-4xl mt-6"
