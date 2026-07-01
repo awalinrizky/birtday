@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
+import Loading from "./components/loading/Loading";
 import Opening from "./components/opening/Opening";
 import Router from "./routes/Router";
-import Loading from "./components/loading/Loading";
 
 export default function App() {
-
   const [loading, setLoading] = useState(true);
   const [opened, setOpened] = useState(false);
+
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -17,16 +18,23 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
+  if (loading) return <Loading />;
 
   return (
     <>
+      <audio
+        ref={audioRef}
+        src="/music/birthday.mp3"
+        loop
+      />
+
       {!opened ? (
-        <Opening onOpen={() => setOpened(true)} />
+        <Opening
+          audioRef={audioRef}
+          onOpen={() => setOpened(true)}
+        />
       ) : (
-        <Router />
+        <Router audioRef={audioRef} />
       )}
     </>
   );

@@ -8,9 +8,9 @@ import LoveLetter from "../components/sections/LoveLetter";
 import Playlist from "../components/sections/Playlist";
 import Future from "../components/sections/Future";
 
-export default function Home() {
+export default function Home({ audioRef }) {
   return (
-    <MainLayout>
+    <MainLayout audioRef={audioRef}>
 
       <Hero />
 
