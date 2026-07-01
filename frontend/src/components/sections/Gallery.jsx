@@ -18,8 +18,10 @@ export default function Gallery() {
             {gallery.map((photo) => (
               <PhotoView key={photo.id} src={photo.image}>
                 <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  transition={{ duration: 0.4 }}
+                  whileHover={{
+                    scale: 1.04,
+                    y: -8,
+                  }}
                   className="group cursor-pointer overflow-hidden rounded-2xl shadow-lg relative border border-gold-soft"
                 >
                   <img

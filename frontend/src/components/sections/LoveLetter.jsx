@@ -15,7 +15,7 @@ export default function LoveLetter() {
           className="bg-paper rounded-3xl shadow-2xl p-10 md:p-16 relative border border-gold-soft"
         >
           <div className="monogram-seal w-16 h-16 text-2xl absolute -top-8 left-1/2 -translate-x-1/2">
-            R&I
+            CAA
           </div>
 
           <SectionTitle
@@ -30,6 +30,29 @@ export default function LoveLetter() {
             wrapper="div"
             cursor={false}
             className="mt-12 whitespace-pre-line leading-9 text-lg text-ink-soft"
+            initial={{
+opacity:0
+}}
+
+whileInView={{
+opacity:1
+}}
+
+transition={{
+delay:4
+}}
+
+className="
+mt-20
+text-right
+text-5xl
+"
+
+style={{
+fontFamily:"var(--font-script)"
+}}
+
+
           />
         </motion.div>
       </Container>

@@ -8,7 +8,19 @@ export default function Footer() {
           className="text-3xl md:text-4xl mt-6"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Our Little Place
+          For someone
+
+who unknowingly
+
+became
+
+my favorite place
+
+♡
+
+Happy Birthday
+
+🤍
         </h2>
 
         <p

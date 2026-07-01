@@ -15,6 +15,8 @@ export default function OurStory() {
       try {
         const response = await api.get("/timelines");
 
+console.log("RESPONSE:", response.data);
+
         setTimelines(response.data.data || response.data);
       } catch (err) {
         console.error(err);

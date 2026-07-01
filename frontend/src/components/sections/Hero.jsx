@@ -1,31 +1,63 @@
 import hero from "../../assets/images/hero.jpg";
 import { motion } from "framer-motion";
 import { siteData } from "../../constants/siteData.js";
-import { ChevronDown } from "lucide-react";
 import Container from "../ui/Container";
-import SectionTitle from "../ui/SectionTitle";
 
 export default function Hero() {
   return (
     <section id="home" className="relative h-screen overflow-hidden">
 
+      {/* IMAGE */}
       <motion.img
         src={hero}
-        alt=""
+        alt="hero"
         className="absolute inset-0 w-full h-full object-cover"
-        animate={{ scale: [1, 1.06, 1] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        initial={{
+          scale: 1.18,
+          filter: "blur(12px)",
+        }}
+        animate={{
+          scale: 1,
+          filter: "blur(0px)",
+        }}
+        transition={{
+          duration: 7,
+          ease: "easeOut",
+        }}
       />
 
-      {/* warm wine-toned overlay instead of flat black */}
+      {/* GLOW EFFECT */}
+      <div
+        className="
+          absolute
+          left-1/2
+          top-1/2
+          -translate-x-1/2
+          -translate-y-1/2
+          w-[700px]
+          h-[700px]
+          rounded-full
+          bg-[#b86a75]/20
+          blur-[180px]
+        "
+      />
+
+      {/* OVERLAY */}
       <div
         className="absolute inset-0"
         style={{
-          background:
-            "linear-gradient(180deg, rgba(43,36,32,0.55) 0%, rgba(92,32,41,0.55) 60%, rgba(43,36,32,0.75) 100%)",
+          background: `
+            linear-gradient(
+              180deg,
+              rgba(10,10,10,.15) 0%,
+              rgba(60,20,28,.35) 45%,
+              rgba(22,16,18,.82) 100%
+            )
+          `,
         }}
       />
-<div data-aos="fade-up"></div>
+
+      {/* CONTENT */}
       <div className="relative z-10 flex h-full items-center justify-center">
         <Container>
 
@@ -33,8 +65,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="eyebrow justify-center text-gold-soft"
-            style={{ color: "#e3d3b8" }}
+            className="text-center text-[#e3d3b8] uppercase tracking-[3px]"
           >
             Happy Birthday
           </motion.p>
@@ -43,7 +74,13 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-6xl md:text-8xl mt-6"
+            className="
+              text-6xl
+              md:text-[7rem]
+              leading-none
+              drop-shadow-xl
+              text-center
+            "
             style={{ fontFamily: "var(--font-display)" }}
           >
             {siteData.hero.title}
@@ -53,8 +90,16 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
-            className="text-4xl md:text-6xl mt-2"
-            style={{ fontFamily: "var(--font-script)", color: "#dcb3ac" }}
+            className="
+              text-5xl
+              md:text-7xl
+              mt-2
+              text-center
+            "
+            style={{
+              fontFamily: "var(--font-script)",
+              color: "#dcb3ac",
+            }}
           >
             {siteData.hero.subtitle}
           </motion.h2>
@@ -63,29 +108,59 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
-            className="mt-8 max-w-xl mx-auto text-lg leading-8 text-paper/85"
+            className="
+              mt-8
+              max-w-xl
+              mx-auto
+              text-xl
+              leading-9
+              text-center
+              text-white/80
+            "
           >
             {siteData.hero.description}
           </motion.p>
 
+          {/* BUTTON */}
           <motion.a
             href="#story"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.3 }}
-            className="inline-block mt-10 rounded-full border border-gold px-8 py-4 text-sm uppercase tracking-[2px] hover:bg-gold hover:text-ink transition-all duration-300"
+            className="
+              inline-block
+              mt-10
+              rounded-full
+              border
+              border-[#d5b98f]
+              px-8
+              py-4
+              text-sm
+              uppercase
+              tracking-[2px]
+              transition-all
+              duration-300
+              hover:bg-[#d5b98f]
+              hover:text-black
+              hover:scale-105
+            "
           >
             Explore Our Story
           </motion.a>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, y: [0, 10, 0] }}
-            transition={{ delay: 2, repeat: Infinity, duration: 1.6 }}
-            className="mt-14 flex justify-center text-gold"
-          >
-            <ChevronDown size={32} />
-          </motion.div>
+          {/* SCROLL INDICATOR */}
+          <div className="mt-14 flex justify-center">
+            <div className="w-7 h-12 rounded-full border border-white/60 flex justify-center">
+              <motion.div
+                animate={{ y: [4, 18, 4] }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.8,
+                }}
+                className="w-1.5 h-1.5 rounded-full bg-white mt-2"
+              />
+            </div>
+          </div>
 
         </Container>
       </div>

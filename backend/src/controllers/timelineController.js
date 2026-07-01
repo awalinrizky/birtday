@@ -1,42 +1,46 @@
-export const createTimeline = async (req, res) => {
+import supabase from '../config/supabase.js';
 
+// READ
+export const getTimelines = async (req, res, next) => {
   try {
-
-    const {
-      event_date,
-      title,
-      description,
-    } = req.body;
-
-    const image = req.file
-      ? req.file.filename
-      : null;
-
-    await db.query(
-      `
-      INSERT INTO timelines
-      (event_date,title,description,image)
-      VALUES (?,?,?,?)
-      `,
-      [
-        event_date,
-        title,
-        description,
-        image,
-      ]
-    );
-
-    res.json({
-      success: true,
-      message: "Timeline created",
-    });
-
-  } catch (err) {
-
-    console.log(err);
-
-    res.status(500).json(err);
-
+    const { data, error } = await supabase
+      .from('timelines')
+      .select('*')
+      .order('event_date', { ascending: true });
+    if (error) throw { statusCode: 500, message: error.message };
+    res.status(200).json({ success: true, data });
+  } catch (error) {
+    next(error);
   }
+};
 
+// CREATE (Bypass User ID)
+export const createTimeline = async (req, res, next) => {
+  try {
+    const { title, description, event_date, image_url } = req.body;
+    const { data, error } = await supabase
+      .from('timelines')
+      .insert([{ title, description, event_date, image_url }])
+      .select()
+      .single();
+    if (error) throw { statusCode: 500, message: error.message };
+    res.status(201).json({ success: true, data });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// DELETE
+export const deleteTimeline = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { error } = await supabase
+      .from('timelines')
+      .delete()
+      .eq('id', id);
+    if (error) throw { statusCode: 500, message: error.message };
+    res.status(200).json({ success: true, message: 'Deleted' });
+  } catch (error) {
+    next(error);
+  }
 };

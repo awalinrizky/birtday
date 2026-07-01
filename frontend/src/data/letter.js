@@ -19,9 +19,9 @@ No matter how much time passes,
 I hope this place keeps growing,
 just like our memories.
 
-Happy Birthday.
+Happy Birthday
 
-I love you.
+I love you
 
 — Kyy ❤️
 `,

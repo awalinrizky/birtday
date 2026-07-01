@@ -1,57 +1,117 @@
 import { useEffect, useState } from "react";
-import { siteData } from "../../constants/siteData.js";
-import { getRelationshipDuration } from "../../utils/date.js";
+import { motion } from "framer-motion";
+
 import Container from "../ui/Container";
-import SectionTitle from "../ui/SectionTitle";
+
 
 export default function LoveCounter() {
-  const [time, setTime] = useState(
-    getRelationshipDuration(siteData.relationshipDate),
-  );
+  // ubah ke false kalau mau countdown normal
+
+  const targetDate = new Date("2026-07-02T00:10:00+07:00").getTime();
+
+  const calculate = () => {
+    const now = new Date();
+    const diff = targetDate - now;
+
+    if (diff <= 0) {
+      return {
+        finished: true,
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      };
+    }
+
+    return {
+      finished: false,
+      days: Math.floor(diff / 1000 / 60 / 60 / 24),
+      hours: Math.floor(diff / 1000 / 60 / 60) % 24,
+      minutes: Math.floor(diff / 1000 / 60) % 60,
+      seconds: Math.floor(diff / 1000) % 60,
+    };
+  };
+
+  const [time, setTime] = useState(calculate());
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(getRelationshipDuration(siteData.relationshipDate));
+      setTime(calculate());
     }, 1000);
+
     return () => clearInterval(interval);
   }, []);
 
+  const items = [
+    {
+      value: time.days,
+      label: "Hari",
+    },
+    {
+      value: time.hours,
+      label: "Jam",
+    },
+    {
+      value: time.minutes,
+      label: "Menit",
+    },
+    {
+      value: time.seconds,
+      label: "Detik",
+    },
+  ];
+
   return (
-    <section className="py-28 bg-paper" id="counter">
+    <section className="py-28 bg-paper">
       <Container>
+        <p className="eyebrow justify-center">
+          Birthday Countdown
+        </p>
 
-        <div className="monogram-seal w-14 h-14 text-xl mx-auto">KyyCaa</div>
+        <h2
+          className="text-center text-6xl mt-5"
+          style={{
+            fontFamily: "var(--font-display)",
+          }}
+        >
+          2 Juli 2026
+        </h2>
 
-        <SectionTitle
-          eyebrow="Together Since"
-          title={new Date(siteData.relationshipDate).toLocaleDateString("id-ID", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })}
-        />
+        <p className="text-center mt-4 text-ink-soft">
+          Countdown menuju ulang tahun Icaa 🎂
+        </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 mt-16">
-          <CounterItem number={time.days} label="Hari" />
-          <CounterItem number={time.hours} label="Jam" />
-          <CounterItem number={time.minutes} label="Menit" />
-          <CounterItem number={time.seconds} label="Detik" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
+          {items.map((item) => (
+            <motion.div
+              key={item.label}
+              whileHover={{ y: -8 }}
+              className="
+                rounded-3xl
+                bg-white
+                p-8
+                shadow-xl
+                border
+                border-gold-soft
+                text-center
+              "
+            >
+              <div
+                className="text-6xl text-wine"
+                style={{
+                  fontFamily: "var(--font-display)",
+                }}
+              >
+                {item.value}
+              </div>
+
+              <div className="uppercase tracking-[3px] text-sm mt-3 text-ink-soft">
+                {item.label}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </Container>
     </section>
-  );
-}
-
-function CounterItem({ number, label }) {
-  return (
-    <div className="border-t border-gold-soft pt-5">
-      <h3
-        className="text-5xl md:text-6xl text-wine"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {number}
-      </h3>
-      <p className="uppercase tracking-[3px] text-xs mt-3 text-ink-soft">{label}</p>
-    </div>
   );
 }
