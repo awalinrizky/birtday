@@ -1,28 +1,32 @@
+import confetti from "canvas-confetti";
+
 export default function ContinueButton({ onClick }) {
+
+  const handleClick = () => {
+
+    confetti({
+
+      particleCount: 180,
+
+      spread: 100,
+
+      origin: { y: 0.6 }
+
+    });
+
+    setTimeout(() => {
+
+      onClick();
+
+    },600);
+
+  };
 
   return (
 
-    <button
+    <button onClick={handleClick}>
 
-      onClick={onClick}
-
-      className="
-      absolute
-      bottom-16
-      left-1/2
-      -translate-x-1/2
-      px-8
-      py-4
-      rounded-full
-      bg-rose-400
-      text-white
-      hover:scale-105
-      duration-300
-      "
-
-    >
-
-      Enter Our Little Place ❤️
+      Continue
 
     </button>
 

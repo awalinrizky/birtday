@@ -7,12 +7,10 @@ export default function MainLayout({ children, audioRef }) {
     <>
       <Navbar />
 
-      <main>
-        {children}
-      </main>
+      <main>{children}</main>
 
       <MusicButton audioRef={audioRef} />
-
+      <ScrollTop />
       <Footer />
     </>
   );

@@ -1,24 +1,66 @@
-import { motion } from "framer-motion";
+import { useEffect,useState } from "react";
 
-export default function Loading() {
-  return (
-    <div className="fixed inset-0 bg-[#fbf6ee] flex flex-col justify-center items-center z-[9999]">
-      <motion.div
-        animate={{
-          scale: [1, 1.15, 1],
-        }}
-        transition={{
-          repeat: Infinity,
-          duration: 1.5,
-        }}
-        className="text-7xl"
-      >
-        🤍
-      </motion.div>
+const texts=[
 
-      <p className="mt-6 tracking-[8px] uppercase text-[#7A2E3B]">
-        Loading...
-      </p>
-    </div>
-  );
+"Finding memories...",
+
+"Collecting little moments...",
+
+"Preparing something special...",
+
+"Almost ready..."
+
+];
+
+export default function Loading(){
+
+const[index,setIndex]=useState(0);
+
+useEffect(()=>{
+
+const interval=setInterval(()=>{
+
+setIndex(prev=>(prev+1)%texts.length);
+
+},800);
+
+return()=>clearInterval(interval);
+
+},[]);
+
+return(
+
+<div
+className="
+fixed
+inset-0
+bg-[#f8f4ee]
+flex
+items-center
+justify-center
+flex-col
+"
+>
+
+<div
+className="
+text-6xl
+mb-8
+"
+>
+
+🤍
+
+</div>
+
+<p>
+
+{texts[index]}
+
+</p>
+
+</div>
+
+);
+
 }

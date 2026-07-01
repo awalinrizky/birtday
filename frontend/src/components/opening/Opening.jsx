@@ -10,6 +10,8 @@ export default function Opening({ onOpen, audioRef }) {
 
   const handleOpen = async () => {
     try {
+      audioRef.current.volume = 0.35;
+
       await audioRef.current.play();
     } catch (err) {
       console.log(err);

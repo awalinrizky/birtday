@@ -2,7 +2,6 @@ export default function Footer() {
   return (
     <footer className="bg-wine-deep text-paper py-20">
       <div className="max-w-6xl mx-auto text-center px-6">
-
         <div className="monogram-seal w-14 h-14 text-xl mx-auto">R&I</div>
 
         <h2
@@ -12,14 +11,18 @@ export default function Footer() {
           Our Little Place
         </h2>
 
-        <p className="mt-4 text-paper/70">
-          Every memory deserves a forever home.
+        <p
+          className="
+text-center
+text-sm
+mt-10
+text-gray-500
+"
+        >
+          Made with love, patience, and countless little memories.
+          <br />
+          Happy Birthday, Icaa 🤍
         </p>
-
-        <div className="mt-10 text-xs uppercase tracking-[2px] text-paper/50">
-          Made with love, for Icaa — by Rizky
-        </div>
-
       </div>
     </footer>
   );
