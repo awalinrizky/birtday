@@ -1,19 +1,33 @@
+import { useEffect, useState } from "react";
+
+import Opening from "./components/opening/Opening";
 import Router from "./routes/Router";
 import Loading from "./components/loading/Loading";
-const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  const timer = setTimeout(() => {
-    setLoading(false);
-  }, 2000);
+export default function App() {
 
-  return () => clearTimeout(timer);
-}, []);
+  const [loading, setLoading] = useState(true);
+  const [opened, setOpened] = useState(false);
 
-if (loading) return <Loading />;
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
 
-export default function App(){
+    return () => clearTimeout(timer);
+  }, []);
 
-    return <Router/>
+  if (loading) {
+    return <Loading />;
+  }
 
+  return (
+    <>
+      {!opened ? (
+        <Opening onOpen={() => setOpened(true)} />
+      ) : (
+        <Router />
+      )}
+    </>
+  );
 }
