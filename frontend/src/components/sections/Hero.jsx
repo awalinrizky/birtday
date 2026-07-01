@@ -25,7 +25,7 @@ export default function Hero() {
             "linear-gradient(180deg, rgba(43,36,32,0.55) 0%, rgba(92,32,41,0.55) 60%, rgba(43,36,32,0.75) 100%)",
         }}
       />
-
+<div data-aos="fade-up"></div>
       <div className="relative z-10 flex h-full items-center justify-center">
         <Container>
 
