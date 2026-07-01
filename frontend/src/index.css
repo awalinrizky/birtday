@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Parisienne&family=Poppins:wght@300;400;500;600&display=swap');
+
+@import "tailwindcss";
+
+/* ===================================================
+   DESIGN TOKENS — "Our Little Place"
+   Editorial love-letter aesthetic: ivory stationery,
+   deep wine accent, soft gold detailing.
+   =================================================== */
+@theme {
+  --color-ivory: #fbf6ee;
+  --color-ivory-deep: #f2e9db;
+  --color-paper: #fffdf9;
+
+  --color-ink: #2b2420;
+  --color-ink-soft: #6e6259;
+
+  --color-wine: #7a2e3b;
+  --color-wine-deep: #5c2029;
+  --color-wine-soft: #a5525f;
+
+  --color-blush: #dcb3ac;
+  --color-blush-soft: #eeded9;
+
+  --color-gold: #b8935a;
+  --color-gold-soft: #e3d3b8;
+
+  --font-display: "Cormorant Garamond", serif;
+  --font-script: "Parisienne", cursive;
+  --font-body: "Poppins", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-ivory);
+  color: var(--color-ink);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-wine);
+  color: var(--color-ivory);
+}
+
+/* Reusable stationery-style eyebrow label with hairline rule */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.75rem;
+  color: var(--color-wine);
+  font-weight: 500;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--color-gold);
+}
+
+/* Monogram seal — the recurring signature element */
+.monogram-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(160deg, var(--color-wine) 0%, var(--color-wine-deep) 100%);
+  border: 1px solid var(--color-gold);
+  box-shadow: 0 8px 24px rgba(122, 46, 59, 0.35);
+  color: var(--color-gold-soft);
+  font-family: var(--font-script);
+}
