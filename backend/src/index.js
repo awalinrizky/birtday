@@ -7,7 +7,6 @@ import authRoutes from './routes/authRoutes.js';
 import timelineRoutes from './routes/timelineRoutes.js';
 import galleryRoutes from './routes/galleryRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
-import letterRoutes from './routes/letterRoutes.js';
 dotenv.config();
 
 const app = express();
@@ -34,7 +33,6 @@ app.use('/api/auth', authRoutes); // BARU DI TAMBAHKAN
 app.use('/api/timelines', timelineRoutes); // BARU DITAMBAHKAN
 app.use('/api/gallery', galleryRoutes);   // BARU DITAMBAHKAN
 app.use('/api/upload', uploadRoutes); // BARU DITAMBAHKAN
-app.use('/api/letters', letterRoutes);
 
 
 // Global Error Handler (Harus di bagian paling bawah)
